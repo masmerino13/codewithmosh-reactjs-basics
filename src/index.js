@@ -1,8 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import jquery from 'jquery';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap';
+
+import 'font-awesome/css/font-awesome.css';
+
 import * as serviceWorker from './serviceWorker';
+
+import App from './App';
+import './index.css';
+
+window.jQuery = jquery;
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
