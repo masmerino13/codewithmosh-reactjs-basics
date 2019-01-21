@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import jquery from 'jquery';
+import 'jquery';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap';
 
@@ -10,8 +10,6 @@ import * as serviceWorker from './serviceWorker';
 
 import App from './App';
 import './index.css';
-
-window.jQuery = jquery;
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
