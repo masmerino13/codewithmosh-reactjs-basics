@@ -53,7 +53,7 @@ const Todos = () => {
 
   return (
     <div className="app">
-      <p>Sample todos app, just for testing <b>setState</b> hook</p>
+      <p>Todo app, just for testing <b>setState</b> hook</p>
       <div className="todo-list">
         <TodoForm addTodo={addTodo} /> <br />
         {todos.map((todo, index) => (<Todo key={index} index={index} todo={todo} removeTodo={() => removeTodo(index)} completeTodo={() => completeTodo(index)} />))}

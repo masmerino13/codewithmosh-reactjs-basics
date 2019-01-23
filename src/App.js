@@ -1,13 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import styled from 'styled-components';
 
 import Movies from './components/movies';
 import Counters from './components/counters';
 import Todos from './components/todos';
 
+const Copy = styled.div`
+  text-align: right;
+  padding-right: 20px;
+  font-style: italic;
+  color: #cecfd0;
+`;
+
 const Home = () => {
   return (
-    <div className="text-center">Home</div>
+    <div className="text-center">Code with Mosh course practice</div>
   )
 }
 
@@ -15,7 +23,7 @@ const NavBar = () => {
   return (
     <Fragment>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-        <Link className="navbar-brand" to="/">React snippets</Link>
+        <Link className="navbar-brand" to="/">React basics</Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -28,6 +36,7 @@ const NavBar = () => {
           </ul>
         </div>
       </nav>
+      <Copy>By @masmerinosv</Copy>
     </Fragment>
   )
 }
