@@ -4,6 +4,7 @@ import Rating from 'react-rating';
 import { getMovies } from '../services/fakeMovieService';
 import Badge from '../utils/setBadge';
 import Actions from '../utils/dropdownActions';
+import Like from '../utils/like';
 
 class Movies extends Component {
     state = {
@@ -16,14 +17,23 @@ class Movies extends Component {
       });
     }
 
+    handleLike = movie => {
+      console.log('movie', movie);
+
+      const moviesList = [...this.state.moviesList];
+      const index = moviesList.indexOf(movie);
+      moviesList[index] = {...movie, isLiked: movie.isLiked ? false : true};
+
+      this.setState({ moviesList });
+    }
+
   render() {
     const { moviesList } = this.state;
 
     return (
       <Fragment>
-        <p className="text-right font-italic">
-          { moviesList.length > 0 && <p>Showing { moviesList.length } movies</p> }
-        </p>
+        <h3>Manage your movies</h3>
+        { moviesList.length > 0 && <p className="text-right font-italic">Showing { moviesList.length } movies</p> }        
         <table className="table">
           <thead className="thead-dark">
             <tr>
@@ -44,7 +54,7 @@ class Movies extends Component {
                               initialRating={movie.dailyRentalRate}
                               readonly={true}
                               emptySymbol="fa fa-star-o fa-1x yellow"
-                              fullSymbol="fa fa-star fa-1x yellow" />
+                              fullSymbol="fa fa-star fa-1x yellow" />  <Like like={ movie.isLiked } onLiked={() => this.handleLike(movie)} />
                       </td>
                       <td className="text-center">{movie.genre.name}</td>
                       <td className="text-center"><Badge value={movie.numberInStock} /></td>
