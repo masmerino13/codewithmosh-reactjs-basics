@@ -21,7 +21,7 @@ const Home = () => {
 
 const NavBar = () => {
   return (
-    <Fragment>
+    <>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
         <Link className="navbar-brand" to="/">React basics</Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,7 @@ const NavBar = () => {
         </div>
       </nav>
       <Copy>By @masmerinosv</Copy>
-    </Fragment>
+    </>
   )
 }
 

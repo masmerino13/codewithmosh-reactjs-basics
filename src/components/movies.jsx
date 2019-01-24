@@ -18,8 +18,6 @@ class Movies extends Component {
     }
 
     handleLike = movie => {
-      console.log('movie', movie);
-
       const moviesList = [...this.state.moviesList];
       const index = moviesList.indexOf(movie);
       moviesList[index] = {...movie, isLiked: movie.isLiked ? false : true};
@@ -31,7 +29,7 @@ class Movies extends Component {
     const { moviesList } = this.state;
 
     return (
-      <Fragment>
+      <>
         <h3>Manage your movies</h3>
         { moviesList.length > 0 && <p className="text-right font-italic">Showing { moviesList.length } movies</p> }        
         <table className="table">
@@ -67,7 +65,7 @@ class Movies extends Component {
             }
           </tbody>
         </table>
-      </Fragment>
+      </>
     );
   }
 }

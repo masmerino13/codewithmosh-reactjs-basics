@@ -1,5 +1,5 @@
 import React from "react";
-import Badge from '../utils/setBadge';
+import Badge from '../../utils/setBadge';
 
 const Counter = ({ counter, onIncrement, onDecrement, onRemove }) => {
   return (
