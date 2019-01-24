@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import './todos.css';
+import { TodoContainer, TodoList, TodoBox } from './todos.styled';
 
 const Todo = ({ todo, removeTodo, completeTodo }) => (
-    <div className="todo" style={{ textDecoration: todo.completed ? "line-through" : "", color: todo.completed ? "green" : "" }} >
+    <TodoBox style={{ textDecoration: todo.completed ? "line-through" : "", color: todo.completed ? "green" : "" }}>
         {todo.text}
         <div>
             <button onClick={completeTodo} style={{ color: todo.completed ? "green" : "" }}><i className="fa fa-check"></i></button>
             <button onClick={removeTodo}><i className="fa fa-trash"></i></button>
         </div>
-    </div>
+    </TodoBox>
 );
 
 const TodoForm = ({ addTodo }) => {
@@ -52,13 +52,13 @@ const Todos = () => {
       }
 
   return (
-    <div className="app">
+    <TodoContainer>
       <p>Todo app, just for testing <b>useState</b> hook</p>
-      <div className="todo-list">
+      <TodoList>
         <TodoForm addTodo={addTodo} /> <br />
         {todos.map((todo, index) => (<Todo key={index} index={index} todo={todo} removeTodo={() => removeTodo(index)} completeTodo={() => completeTodo(index)} />))}
-      </div>
-    </div>
+      </TodoList>
+    </TodoContainer>
   );
 };
 
