@@ -1,14 +1,29 @@
 import React, { Component, Fragment } from 'react';
-import Rating from 'react-rating';
 
 import { getMovies } from '../services/fakeMovieService';
-import Badge from '../utils/setBadge';
-import Actions from '../utils/dropdownActions';
-import Like from '../utils/like';
+import { getGenres } from '../services/fakeGenreService';
+import Pagination from '../utils/pagination';
+import paginate from '../utils/paginate';
+import ListGroup from '../common/ListGroup';
+import MoviesTable from './moviesTable';
 
 class Movies extends Component {
     state = {
-        moviesList: getMovies()
+        moviesList: [],
+        pageSize: 3,
+        currentPage: 1,
+        genres: [],
+        filters: {
+          genre: 'all'
+        },
+        selectedGenre: 'all'
+    }
+
+    componentDidMount() {
+      this.setState({
+        moviesList: getMovies(),
+        genres: getGenres()
+      })
     }
 
     onRemovemovie = (movieId) => {
@@ -25,46 +40,48 @@ class Movies extends Component {
       this.setState({ moviesList });
     }
 
+    handlePageChange = page => {
+      this.setState({ currentPage: page });
+    }
+
+    handleFilterByGenre = genre => {
+      this.setState({
+        selectedGenre: genre,
+        currentPage: 1
+      })
+    }
+
   render() {
-    const { moviesList } = this.state;
+    const {
+      moviesList,
+      pageSize,
+      currentPage,
+      genres,
+      selectedGenre
+    } = this.state;
+
+    const items = moviesList.filter(movie => { return (selectedGenre === 'all') ? true : movie.genre._id === selectedGenre._id }).sort((a, b) => { console.log(a, b)});
+
+    const movies = paginate({ items, currentPage, pageSize });
 
     return (
       <>
         <h3>Manage your movies</h3>
-        { moviesList.length > 0 && <p className="text-right font-italic">Showing { moviesList.length } movies</p> }        
-        <table className="table">
-          <thead className="thead-dark">
-            <tr>
-              <th>Title</th>
-              <th className="text-center">Genre</th>
-              <th className="text-center">Stock</th>
-              <th width="150"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-                moviesList.map(movie => (
-                  <tr key={movie._id}>
-                      <td>
-                          {movie.title}
-                          <br />
-                          <Rating
-                              initialRating={movie.dailyRentalRate}
-                              readonly={true}
-                              emptySymbol="fa fa-star-o fa-1x yellow"
-                              fullSymbol="fa fa-star fa-1x yellow" />  <Like like={ movie.isLiked } onLiked={() => this.handleLike(movie)} />
-                      </td>
-                      <td className="text-center">{movie.genre.name}</td>
-                      <td className="text-center"><Badge value={movie.numberInStock} /></td>
-                      <td className="text-right"><Actions id={movie._id} action={() => this.onRemovemovie(movie._id)} /></td>
-                  </tr>
-              ))
-            }
-            {
-              moviesList.length === 0 && <tr><td colspan="4" className="text-center font-italic">No data to show</td></tr>
-            }
-          </tbody>
-        </table>
+        <div className="row">
+          <div className="col-md-2 col-lg-2">
+            <ListGroup items={genres} action={this.handleFilterByGenre} selected={selectedGenre} />
+          </div>
+          <div className="col-md-10 col-lg-10">
+            { items.length > 0 && <p className="text-right font-italic">Showing { items.length } movies</p> }        
+            <MoviesTable movies={movies} onLike={this.handleLike} onRemove={this.onRemovemovie} onSort={() => console.log('sorting')} />
+            <Pagination
+              itemsCount={items.length}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={this.handlePageChange}
+              />
+          </div>
+        </div>
       </>
     );
   }
