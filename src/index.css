@@ -1,3 +1,7 @@
 .yellow {
   color: #11d023;
 }
+
+.clickable {
+  cursor: pointer;
+}

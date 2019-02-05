@@ -6,6 +6,7 @@ import Pagination from '../utils/pagination';
 import paginate from '../utils/paginate';
 import ListGroup from '../common/ListGroup';
 import MoviesTable from './moviesTable';
+import _ from 'lodash';
 
 class Movies extends Component {
     state = {
@@ -16,7 +17,11 @@ class Movies extends Component {
         filters: {
           genre: 'all'
         },
-        selectedGenre: 'all'
+        selectedGenre: 'all',
+        sortColumn: {
+          path: 'title',
+          order: 'asc'
+        }
     }
 
     componentDidMount() {
@@ -51,18 +56,32 @@ class Movies extends Component {
       })
     }
 
+    handleSort = sortColumn  => {
+      this.setState({sortColumn});
+    }
+
+    getPageData = () => {
+      const { moviesList, selectedGenre, sortColumn, currentPage, pageSize } = this.state;
+
+      const items = moviesList.filter(movie => { return (selectedGenre === 'all') ? true : movie.genre._id === selectedGenre._id });
+
+      const sorted = _.orderBy(items, [sortColumn.path], [sortColumn.order]);
+
+      const movies = paginate({ items: sorted, currentPage, pageSize });
+
+      return { pageCount: items.length, data: movies };
+    }
+
   render() {
     const {
-      moviesList,
       pageSize,
       currentPage,
       genres,
+      sortColumn,
       selectedGenre
     } = this.state;
 
-    const items = moviesList.filter(movie => { return (selectedGenre === 'all') ? true : movie.genre._id === selectedGenre._id }).sort((a, b) => { console.log(a, b)});
-
-    const movies = paginate({ items, currentPage, pageSize });
+    const { pageCount, data: movies } = this.getPageData();
 
     return (
       <>
@@ -72,10 +91,18 @@ class Movies extends Component {
             <ListGroup items={genres} action={this.handleFilterByGenre} selected={selectedGenre} />
           </div>
           <div className="col-md-10 col-lg-10">
-            { items.length > 0 && <p className="text-right font-italic">Showing { items.length } movies</p> }        
-            <MoviesTable movies={movies} onLike={this.handleLike} onRemove={this.onRemovemovie} onSort={() => console.log('sorting')} />
+            { pageCount > 0 && <p className="text-right font-italic">Showing { pageCount } movies</p> }        
+            <MoviesTable  {
+              ...{
+                movies,
+                sortColumn,
+                onLike: this.handleLike,
+                onRemove: this.onRemovemovie,
+                onSort: this.handleSort
+                }
+              } />
             <Pagination
-              itemsCount={items.length}
+              itemsCount={pageCount}
               pageSize={pageSize}
               currentPage={currentPage}
               onPageChange={this.handlePageChange}
