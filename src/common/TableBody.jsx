@@ -9,7 +9,7 @@ export class TableBody extends Component {
     }
 
   render() {
-      const { columns, data, onRemove, onLike } = this.props;
+      const { columns, data } = this.props;
     return (
         <tbody>
             {

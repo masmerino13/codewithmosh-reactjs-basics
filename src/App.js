@@ -1,10 +1,13 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Route, Link, Switch, Redirect } from "react-router-dom";
 import styled from 'styled-components';
 
 import Movies from './components/movies';
 import Counters from './components/counters';
 import Todos from './components/todos';
+import Rentals from './components/rentals';
+import Customers from './components/customers';
+import MovieDetail from './components/movies/movieDetail';
 
 const Copy = styled.div`
   text-align: right;
@@ -13,13 +16,48 @@ const Copy = styled.div`
   color: #cecfd0;
 `;
 
-const Home = () => {
-  return (
-    <div className="text-center">Code with Mosh course practice</div>
-  )
-}
+const NotFound = () => (<h1>404 - Close to be a nice not found page</h1>);
+
+const menuItems = [
+  {
+    path: '/',
+    label: 'Home'
+  },
+  {
+    path: '/movies',
+    label: 'Movies'
+  },
+  {
+    path: '/counters',
+    label: 'Counters'
+  },
+  {
+    path: '/todos',
+    label: 'Hooks todo'
+  },
+  {
+    path: '/rentals',
+    label: 'Rentals'
+  },
+  {
+    path: '/customers',
+    label: 'Customers'
+  }
+];
+
+const otherMenu = {
+  public: [
+    {
+      path: '/',
+      main: Movies
+    }
+  ]
+};
 
 const NavBar = () => {
+
+  console.log('menu', otherMenu);
+
   return (
     <>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
@@ -29,10 +67,9 @@ const NavBar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <ul className="navbar-nav">
-            <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="/movies">Movies</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="/counters">Counters</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="/todos">Hooks todos</Link></li>
+          {
+            menuItems.map((item, key) => <li key={key} className="nav-item"><Link className="nav-link" to={item.path}>{item.label}</Link></li>)
+          }
           </ul>
         </div>
       </nav>
@@ -44,17 +81,22 @@ const NavBar = () => {
 class App extends Component {
   render() {
     return (
-      <Router>
-        <Fragment>
+      <Fragment>
           <NavBar />
           <main className="container">
-              <Route exact path="/" component={Home} />
-              <Route path="/movies" component={Movies} />
-              <Route path="/counters" component={Counters} />
-              <Route path="/todos" component={Todos} />
+              <Switch>
+                <Route path="/movies" component={Movies} />
+                <Route path="/movie/:id" component={MovieDetail} />
+                <Route path="/counters" component={Counters} />
+                <Route path="/todos" render={(props) => <Todos {...props} something="algo" />} />
+                <Route path="/rentals" component={Rentals} />
+                <Route path="/customers" component={Customers} />
+                <Route path="/not-found" component={NotFound} />
+                <Redirect from="/" to="/movies" />
+                <Redirect to="/not-found" />
+              </Switch>
           </main>
         </Fragment>
-      </Router>
     );
   }
 }

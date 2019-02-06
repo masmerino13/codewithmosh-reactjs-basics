@@ -1,10 +1,11 @@
 import React from 'react';
-
 import Rating from 'react-rating';
-import Badge from '../utils/setBadge';
-import Actions from '../utils/dropdownActions';
-import Like from '../utils/like';
-import Table from '../common/table';
+import { Link } from 'react-router-dom';
+
+import Badge from '../../utils/setBadge';
+import Actions from '../../utils/dropdownActions';
+import Like from '../../utils/like';
+import Table from '../../common/table';
 
 const moviesTable = ({ movies, onLike, onRemove, sortColumn, onSort }) => {
 
@@ -12,7 +13,7 @@ const moviesTable = ({ movies, onLike, onRemove, sortColumn, onSort }) => {
         {
             path: 'title', label: 'Title', content: movie => 
             <>
-                {movie.title}
+                <Link to={`/movie/${movie._id}`}>{movie.title}</Link>
                 <br />
                 <Rating
                     initialRating={movie.dailyRentalRate}

@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
-import { getMovies } from '../services/fakeMovieService';
-import { getGenres } from '../services/fakeGenreService';
-import Pagination from '../utils/pagination';
-import paginate from '../utils/paginate';
-import ListGroup from '../common/ListGroup';
+import { getMovies } from '../../services/fakeMovieService';
+import { getGenres } from '../../services/fakeGenreService';
+import Pagination from '../../utils/pagination';
+import paginate from '../../utils/paginate';
+import ListGroup from '../../common/ListGroup';
 import MoviesTable from './moviesTable';
 import _ from 'lodash';
 
