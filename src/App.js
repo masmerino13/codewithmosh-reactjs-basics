@@ -8,6 +8,9 @@ import Todos from './components/todos';
 import Rentals from './components/rentals';
 import Customers from './components/customers';
 import MovieDetail from './components/movies/movieDetail';
+import AddMovie from './components/movies/addMovie';
+import LoginForm from './components/loginForm';
+import SignupForm from './components/signupForm';
 
 const Copy = styled.div`
   text-align: right;
@@ -42,22 +45,18 @@ const menuItems = [
   {
     path: '/customers',
     label: 'Customers'
+  },
+  {
+    path: '/login',
+    label: 'Login'
+  },
+  {
+    path: '/signup',
+    label: 'Signup'
   }
 ];
 
-const otherMenu = {
-  public: [
-    {
-      path: '/',
-      main: Movies
-    }
-  ]
-};
-
 const NavBar = () => {
-
-  console.log('menu', otherMenu);
-
   return (
     <>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
@@ -87,10 +86,13 @@ class App extends Component {
               <Switch>
                 <Route path="/movies" component={Movies} />
                 <Route path="/movie/:id" component={MovieDetail} />
+                <Route path="/add-movie" component={AddMovie} />
                 <Route path="/counters" component={Counters} />
                 <Route path="/todos" render={(props) => <Todos {...props} something="algo" />} />
                 <Route path="/rentals" component={Rentals} />
                 <Route path="/customers" component={Customers} />
+                <Route path="/login" component={LoginForm} />
+                <Route path="/signup" component={SignupForm} />
                 <Route path="/not-found" component={NotFound} />
                 <Redirect from="/" to="/movies" />
                 <Redirect to="/not-found" />

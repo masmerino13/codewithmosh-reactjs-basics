@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 import { getMovies } from '../../services/fakeMovieService';
 import { getGenres } from '../../services/fakeGenreService';
@@ -72,6 +73,10 @@ class Movies extends Component {
       return { pageCount: items.length, data: movies };
     }
 
+    handleNewMovie = movie => {
+      console.log('movie', movie);
+    }
+
   render() {
     const {
       pageSize,
@@ -91,6 +96,7 @@ class Movies extends Component {
             <ListGroup items={genres} action={this.handleFilterByGenre} selected={selectedGenre} />
           </div>
           <div className="col-md-10 col-lg-10">
+            <Link className="btn btn-primary" to="/add-movie">New Movie</Link>
             { pageCount > 0 && <p className="text-right font-italic">Showing { pageCount } movies</p> }        
             <MoviesTable  {
               ...{
