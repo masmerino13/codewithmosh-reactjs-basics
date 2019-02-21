@@ -1,16 +1,9 @@
 import React from 'react';
+import AddMovie from './addMovie';
 
-const handleClick = ({replace}) => {
-    replace('/movies');
-}
-
-const MovieDetail = ({ match, history }) => {
+const MovieDetail = (props) => {
   return (
-    <div>
-      Movie form: { match.params.id }
-      <br />
-      <button className="btn btn-primary" onClick={() => handleClick(history)}>Save</button>
-    </div>
+    <AddMovie {...props} />
   )
 }
 
