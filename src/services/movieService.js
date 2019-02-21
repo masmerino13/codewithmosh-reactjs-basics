@@ -10,10 +10,9 @@ const getMovies = async () => {
 
 const saveMovie = async ({ _id, title, genreId, numberInStock, dailyRentalRate }) => {
     const action = _id === 'new' ? 'post' : 'put';
+    const actionUrl = _id === 'new' ? endpoint : `${endpoint}/${_id}`;
 
-    console.log('action', action);
-
-    const { data } = await axios[action](endpoint, {
+    const { data } = await axios[action](actionUrl, {
         title,
         numberInStock,
         dailyRentalRate,
