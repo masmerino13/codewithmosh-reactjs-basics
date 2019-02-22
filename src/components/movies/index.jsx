@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import _ from 'lodash';
 
-import { getMovies } from '../../services/movieService';
+import { getMovies, deleteMovie } from '../../services/movieService';
 import { getGenres } from '../../services/genreService';
 import Pagination from '../../utils/pagination';
 import paginate from '../../utils/paginate';
@@ -34,7 +34,10 @@ class Movies extends Component {
       })
     }
 
-    onRemovemovie = (movieId) => {
+    onRemovemovie = async (movieId) => {
+
+      await deleteMovie(movieId);
+
       this.setState({
         moviesList: this.state.moviesList.filter(movie => movie._id !== movieId)
       });

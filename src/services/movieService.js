@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from '../config';
+import http from './httpService';
 
 const endpoint = `${config.endpoint}/movies`;
 
@@ -12,7 +13,7 @@ const saveMovie = async ({ _id, title, genreId, numberInStock, dailyRentalRate }
     const action = _id === 'new' ? 'post' : 'put';
     const actionUrl = _id === 'new' ? endpoint : `${endpoint}/${_id}`;
 
-    const { data } = await axios[action](actionUrl, {
+    const { data } = await http[action](actionUrl, {
         title,
         numberInStock,
         dailyRentalRate,
@@ -23,7 +24,13 @@ const saveMovie = async ({ _id, title, genreId, numberInStock, dailyRentalRate }
 }
 
 const getMovie = async (movieId) => {
-    const { data } = await axios.get(`${endpoint}/${movieId}`);
+    const { data } = await http.get(`${endpoint}/${movieId}`);
+
+    return data;
+}
+
+const deleteMovie = async(movieId) => {
+    const { data } = await http.delete(`${endpoint}/${movieId}`);
 
     return data;
 }
@@ -31,5 +38,6 @@ const getMovie = async (movieId) => {
 export {
     getMovies,
     saveMovie,
-    getMovie
+    getMovie,
+    deleteMovie
 }
